@@ -1,0 +1,8 @@
+version: "3"
+services:
+  web_crawler:
+    container_name: web_crawler
+    build: .
+    command: sleep infinity
+    volumes:
+      - ..:/workspace

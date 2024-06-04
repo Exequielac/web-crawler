@@ -1,0 +1,18 @@
+{
+    "name": "Web Crawler App",
+    "dockerComposeFile": "./docker-compose.yml",
+    "workspaceFolder": "/workspace",
+    "service": "web_crawler",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/bash"
+            }
+        },
+        "extensions": [
+            "esbenp.prettier-vscode",
+            "dbaeumer.vscode-eslint"
+        ]
+    },
+    "postCreateCommand": "git config --global --add safe.directory /workspace"
+}
