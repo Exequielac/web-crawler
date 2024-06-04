@@ -1,0 +1,22 @@
+{
+  "name": "web-crawler-frontend",
+  "version": "1.0.0",
+  "description": "Frontend side for web-crawler",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Exequielac/web-crawler.git"
+  },
+  "author": "Exequiel Alberto Castro Rivero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Exequielac/web-crawler/issues"
+  },
+  "homepage": "https://github.com/Exequielac/web-crawler#readme"
+}
