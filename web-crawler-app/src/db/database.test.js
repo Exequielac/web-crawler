@@ -1,6 +1,10 @@
 const { sequelize, authenticateDB } = require('./database');
 
 describe('Database Connection', () => {
+    afterAll(async () => {
+        await sequelize.close();
+      });
+      
     it('should authenticate successfully', async () => {
         await expect(authenticateDB()).resolves.toBeUndefined();
     });
