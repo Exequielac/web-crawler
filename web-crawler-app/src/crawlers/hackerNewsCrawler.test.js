@@ -11,7 +11,7 @@ describe('HackerNewsCrawler', () => {
     let crawler;
 
     beforeEach(() => {
-        crawler = new HackerNewsCrawler(httpService, 2);
+        crawler = new HackerNewsCrawler(httpService, 3);
     });
 
     it('should construct with provided maxEntries', () => {
@@ -35,7 +35,7 @@ describe('HackerNewsCrawler', () => {
     });
 
     describe('crawl', () => {
-        it('should return entries from the page', async () => {
+        it('should return entries from the page when entries are lower than maxEntries', async () => {
             const htmlMock = require('/workspace/web-crawler-app/data/hackerNewsMock2Entries');
             httpService.getHTML.mockResolvedValue(htmlMock);
 
@@ -55,6 +55,35 @@ describe('HackerNewsCrawler', () => {
                     points: 364,
                     comments: 123 
                 },
+            ]);
+        });
+
+        it('should return entries from the page when entries are higher than maxEntries', async () => {
+            const htmlMock = require('/workspace/web-crawler-app/data/hackerNewsMock4Entries');
+            httpService.getHTML.mockResolvedValue(htmlMock);
+
+            const entries = await crawler.crawl('http://example.com');
+
+            // Check that the entries are as expected
+            expect(entries).toEqual([
+                {
+                    number: 1,
+                    title: 'Boeing Starliner launches first crewed mission',
+                    points: 313,
+                    comments: 297 
+                },
+                {
+                    number: 2,
+                    title: 'Vulkan1.3 on the M1 in one month',
+                    points: 364,
+                    comments: 123 
+                },
+                {
+                    number: 3,
+                    title: 'Employees Who Stay in Companies Longer Than Two Years Get Paid 50% Less (2014)',
+                    points: 197,
+                    comments: 147 
+                }
             ]);
         });
 
