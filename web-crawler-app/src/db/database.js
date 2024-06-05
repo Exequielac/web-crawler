@@ -15,8 +15,8 @@ const dbConfig = require('../config/dbConfig');
 const sequelize = new Sequelize(dbConfig);
 
 const models = {
-  Entry: require('../models/Entry')(sequelize, Sequelize.DataTypes),
-  Filter: require('../models/Filter')(sequelize, Sequelize.DataTypes),
+  Entries: require('../models/Entries')(sequelize, Sequelize.DataTypes),
+  Filters: require('../models/Filters')(sequelize, Sequelize.DataTypes),
   UsageData: require('../models/UsageData')(sequelize, Sequelize.DataTypes),
 };
 
@@ -30,8 +30,21 @@ const authenticateDB = async () => {
   }
 };
 
+const createTablesIfNotExist = async () => {
+  try {
+    // In a real production env we should use another 
+    // strategy to create tables, like migrations
+    await sequelize.sync({ alter: true });
+    console.log('Tables created if not exist...');
+  } catch (err) {
+    console.error('Unable to create tables:', err);
+    throw err;
+  }
+};
+
 module.exports = {
   ...models,
   sequelize,
-  authenticateDB
+  authenticateDB,
+  createTablesIfNotExist
 };
