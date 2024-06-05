@@ -1,11 +1,8 @@
 {
-  "name": "web-crawler-backend",
+  "name": "web-crawler-app",
   "version": "1.0.0",
-  "description": "Backend side for web-crawler",
+  "description": "Web crawler command line utility",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
