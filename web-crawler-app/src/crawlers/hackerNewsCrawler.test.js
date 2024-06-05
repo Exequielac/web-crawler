@@ -11,11 +11,11 @@ describe('HackerNewsCrawler', () => {
     let crawler;
 
     beforeEach(() => {
-        crawler = new HackerNewsCrawler(httpService, 3);
+        crawler = new HackerNewsCrawler(httpService, 'dummyUrl', 3);
     });
 
     it('should construct with provided maxEntries', () => {
-        const customCrawler = new HackerNewsCrawler(httpService, 50);
+        const customCrawler = new HackerNewsCrawler(httpService, 'dummyUrl', 50);
         expect(customCrawler.maxEntries).toBe(50);
     });
 
@@ -39,7 +39,7 @@ describe('HackerNewsCrawler', () => {
             const htmlMock = require('/workspace/web-crawler-app/data/hackerNewsMock2Entries');
             httpService.getHTML.mockResolvedValue(htmlMock);
 
-            const entries = await crawler.crawl('http://example.com');
+            const entries = await crawler.crawl();
 
             // Check that the entries are as expected
             expect(entries).toEqual([
@@ -62,7 +62,7 @@ describe('HackerNewsCrawler', () => {
             const htmlMock = require('/workspace/web-crawler-app/data/hackerNewsMock4Entries');
             httpService.getHTML.mockResolvedValue(htmlMock);
 
-            const entries = await crawler.crawl('http://example.com');
+            const entries = await crawler.crawl();
 
             // Check that the entries are as expected
             expect(entries).toEqual([
@@ -90,7 +90,7 @@ describe('HackerNewsCrawler', () => {
         it('should throw an error if fetching the HTML fails', async () => {
             httpService.getHTML.mockRejectedValue(new Error('Network error'));
 
-            await expect(crawler.crawl('http://example.com')).rejects.toThrow('Network error');
+            await expect(crawler.crawl()).rejects.toThrow('Network error');
         });
     });
 });
