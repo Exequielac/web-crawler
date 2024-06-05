@@ -10,12 +10,8 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id'
             }
         },
-        entryId: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'Entries',
-                key: 'id'
-            }
+        result: {
+            type: DataTypes.JSON,
         }
     });
 };
