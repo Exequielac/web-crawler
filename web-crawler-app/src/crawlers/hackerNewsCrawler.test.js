@@ -43,7 +43,18 @@ describe('HackerNewsCrawler', () => {
 
             // Check that the entries are as expected
             expect(entries).toEqual([
-
+                {
+                    number: 1,
+                    title: 'Boeing Starliner launches first crewed mission',
+                    points: 313,
+                    comments: 297 
+                },
+                {
+                    number: 2,
+                    title: 'Vulkan1.3 on the M1 in one month',
+                    points: 364,
+                    comments: 123 
+                },
             ]);
         });
 
