@@ -15,7 +15,6 @@ const dbConfig = require('../config/dbConfig');
 const sequelize = new Sequelize(dbConfig);
 
 const models = {
-  Entries: require('../models/Entries')(sequelize, Sequelize.DataTypes),
   Filters: require('../models/Filters')(sequelize, Sequelize.DataTypes),
   UsageData: require('../models/UsageData')(sequelize, Sequelize.DataTypes),
 };

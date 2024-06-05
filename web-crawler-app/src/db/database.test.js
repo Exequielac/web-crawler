@@ -1,4 +1,4 @@
-const { sequelize, authenticateDB, createTablesIfNotExist, Entries, Filters, UsageData } = require('./database');
+const { sequelize, authenticateDB, createTablesIfNotExist, Filters, UsageData } = require('./database');
 
 describe('Database Tests', () => {
     afterAll(async () => {
@@ -21,10 +21,6 @@ describe('Database Tests', () => {
     });
 
     describe('Models', () => {
-        it('should have an Entries model', () => {
-            expect(Entries).toBeDefined();
-        });
-
         it('should have a Filters model', () => {
             expect(Filters).toBeDefined();
         });
@@ -35,11 +31,6 @@ describe('Database Tests', () => {
     });
 
     describe('Tables', () => {
-        it('should have an Entry table', async () => {
-            const result = await sequelize.query('SELECT * FROM "Entries"');
-            expect(result).toBeDefined();
-        });
-
         it('should have a Filter table', async () => {
             const result = await sequelize.query('SELECT * FROM "Filters"');
             expect(result).toBeDefined();
