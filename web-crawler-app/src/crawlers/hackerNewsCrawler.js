@@ -4,17 +4,17 @@ const cheerio = require('cheerio');
 const BaseCrawler = require('./baseCrawler');
 
 class HackerNewsCrawler extends BaseCrawler {
-    constructor(httpService, maxEntries) {
-        super(httpService);
+    constructor(httpService, url, maxEntries) {
+        super(httpService, url);
         this.maxEntries = maxEntries;
     }
 
-    async crawl(url) {
+    async crawl() {
         let html;
         try {
-            html = await this.httpService.getHTML(url);
+            html = await this.httpService.getHTML(this.url);
         } catch (error) {
-            console.error(`Failed to fetch HTML from ${url}`, error);
+            console.error(`Failed to fetch HTML from ${this.url}`, error);
             throw error;
         }
 
