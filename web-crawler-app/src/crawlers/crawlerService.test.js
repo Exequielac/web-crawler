@@ -1,25 +1,25 @@
 'use strict';
 
-const CrawlerService = require('./crawlerService');
+const BaseCrawler = require('./baseCrawler');
 
 describe('CrawlerService', () => {
-    test('should not be able to be instantiated directly', () => {
-        expect(() => new CrawlerService()).toThrow(TypeError);
+    it('should not be able to be instantiated directly', () => {
+        expect(() => new BaseCrawler()).toThrow(TypeError);
     });
 
-    test('should require crawl method to be implemented', async () => {
-        class TestCrawlerService extends CrawlerService {
+    it('should require crawl method to be implemented', async () => {
+        class TestCrawler extends BaseCrawler {
             constructor() {
                 super(null);
             }
         }
 
-        const service = new TestCrawlerService();
+        const service = new TestCrawler();
         await expect(service.crawl()).rejects.toThrow(Error);
     });
 
-    test('should not throw error when crawl method is implemented', async () => {
-        class TestCrawlerService extends CrawlerService {
+    it('should not throw error when crawl method is implemented', async () => {
+        class TestCrawler extends BaseCrawler {
             constructor() {
                 super(null);
             }
@@ -29,7 +29,7 @@ describe('CrawlerService', () => {
             }
         }
 
-        const service = new TestCrawlerService();
+        const service = new TestCrawler();
         await expect(service.crawl()).resolves.toEqual([]);
     });
 });

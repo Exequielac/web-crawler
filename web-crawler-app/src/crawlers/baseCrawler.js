@@ -1,8 +1,8 @@
 'use strict';
 
-class CrawlerService {
+class BaseCrawler {
     constructor(httpClient) {
-        if (new.target === CrawlerService) {
+        if (new.target === BaseCrawler) {
             throw new TypeError("Cannot construct CrawlerService instances directly");
         }
         this.httpClient = httpClient;
@@ -13,4 +13,4 @@ class CrawlerService {
     }
 }
 
-module.exports = CrawlerService;
+module.exports = BaseCrawler;
