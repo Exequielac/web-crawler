@@ -1,11 +1,11 @@
 'use strict';
 
 class BaseCrawler {
-    constructor(httpClient) {
+    constructor(httpService) {
         if (new.target === BaseCrawler) {
             throw new TypeError("Cannot construct CrawlerService instances directly");
         }
-        this.httpClient = httpClient;
+        this.httpService = httpService;
     }
 
     async crawl(url) {
