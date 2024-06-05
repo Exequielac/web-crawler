@@ -6,14 +6,14 @@ module.exports = (sequelize, DataTypes) => {
         filterId: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'Filter',
+                model: 'Filters',
                 key: 'id'
             }
         },
         entryId: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'Entry',
+                model: 'Entries',
                 key: 'id'
             }
         }
