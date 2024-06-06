@@ -22,6 +22,8 @@ jest.mock('../crawlers/hackerNewsCrawler');
 const request = require('supertest');
 const express = require('express');
 const AppController = require('./controller');
+const { UsageData } = require('../db/database');
+const { commentsFilterInstance, pointsFilterInstance } = require('../filters');
 const HackerNewsCrawler = require('../crawlers/hackerNewsCrawler');
 
 describe('AppController', () => {
@@ -30,6 +32,7 @@ describe('AppController', () => {
     beforeEach(() => {
         app = express();
         app.get('/entries', AppController.getEntries);
+        app.get('/filter/comments', AppController.filterByComments);
     });
 
     it('getEntries returns entries from crawler', async () => {
@@ -40,5 +43,23 @@ describe('AppController', () => {
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual(mockEntries);
+    });
+
+    it('filterByComments filters entries and saves usage data', async () => {
+        const mockEntries = [{ id: 1, comments: 10 }, { id: 2, comments: 5 }];
+        const mockFilteredEntries = [{ id: 1, comments: 10 }];
+        HackerNewsCrawler.prototype.crawl = jest.fn().mockResolvedValue(mockEntries);
+        commentsFilterInstance.filter = jest.fn().mockReturnValue(mockFilteredEntries);
+        UsageData.create = jest.fn();
+
+        const response = await request(app).get('/filter/comments');
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual(mockFilteredEntries);
+        expect(UsageData.create).toHaveBeenCalledWith({
+            timestamp: expect.any(Date),
+            filter: commentsFilterInstance.id,
+            result: mockFilteredEntries,
+        });
     });
 });
