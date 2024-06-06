@@ -2,7 +2,7 @@
 
 const httpService = require('../services/httpService');
 const { UsageData } = require('../db/database');
-const { commentsFilterInstance, pointsFilterInstance } = require('../filters');
+const FilterFactory = require('../filters/FilterFactory');
 const HackerNewsCrawler = require('../crawlers/hackerNewsCrawler');
 const appConfig = require('../config/appConfig');
 
@@ -20,10 +20,11 @@ class AppController {
         }
     }
 
-    static async filterEntries(req, res, next, filterInstance) {
+    static async filterEntries(req, res, next, filterName) {
         try {
             const crawler = new HackerNewsCrawler(httpInstance, appConfig.url, appConfig.entries);
             const entries = await crawler.crawl();
+            const filterInstance = FilterFactory.getFilterInstance(filterName);
             const filteredEntries = filterInstance.filter(entries);
 
             UsageData.create(
@@ -41,11 +42,11 @@ class AppController {
     }
 
     static async filterByComments(req, res, next) {
-        await AppController.filterEntries(req, res, next, commentsFilterInstance);
+        await AppController.filterEntries(req, res, next, appConfig.commentsFilter.name);
     }
 
     static async filterByPoints(req, res, next) {
-        await AppController.filterEntries(req, res, next, pointsFilterInstance);
+        await AppController.filterEntries(req, res, next, appConfig.pointsFilter.name);
     }
 }
 
