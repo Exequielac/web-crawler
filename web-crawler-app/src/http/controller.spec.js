@@ -33,7 +33,9 @@ describe('AppController', () => {
 
     it('getEntries returns entries from crawler', async () => {
         const mockEntries = [{ id: 1 }, { id: 2 }];
-        HackerNewsCrawler.prototype.crawl = jest.fn().mockResolvedValue(mockEntries);
+        HackerNewsCrawler.prototype.crawl = jest
+            .fn()
+            .mockResolvedValue(mockEntries);
 
         const response = await request(app).get('/entries');
 
@@ -42,9 +44,14 @@ describe('AppController', () => {
     });
 
     it('filterByComments filters entries and saves usage data', async () => {
-        const mockEntries = [{ id: 1, comments: 10 }, { id: 2, comments: 5 }];
+        const mockEntries = [
+            { id: 1, comments: 10 },
+            { id: 2, comments: 5 },
+        ];
         const mockFilteredEntries = [{ id: 1, comments: 10 }];
-        HackerNewsCrawler.prototype.crawl = jest.fn().mockResolvedValue(mockEntries);
+        HackerNewsCrawler.prototype.crawl = jest
+            .fn()
+            .mockResolvedValue(mockEntries);
         FilterFactory.getFilterInstance = jest.fn().mockReturnValue({
             internalId: 'commentsFilter',
             filter: jest.fn().mockReturnValue(mockFilteredEntries),
@@ -63,9 +70,14 @@ describe('AppController', () => {
     });
 
     it('filterByPoints filters entries and saves usage data', async () => {
-        const mockEntries = [{ id: 1, points: 10 }, { id: 2, points: 5 }];
+        const mockEntries = [
+            { id: 1, points: 10 },
+            { id: 2, points: 5 },
+        ];
         const mockFilteredEntries = [{ id: 1, points: 10 }];
-        HackerNewsCrawler.prototype.crawl = jest.fn().mockResolvedValue(mockEntries);
+        HackerNewsCrawler.prototype.crawl = jest
+            .fn()
+            .mockResolvedValue(mockEntries);
         FilterFactory.getFilterInstance = jest.fn().mockReturnValue({
             internalId: 'pointsFilter',
             filter: jest.fn().mockReturnValue(mockFilteredEntries),

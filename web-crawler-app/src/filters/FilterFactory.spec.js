@@ -13,17 +13,29 @@ describe('FilterFactory', () => {
     });
 
     it('initializeFilter correctly initializes a filter', async () => {
-        await FilterFactory.initializeFilter(MockFilter, ['arg1', 'arg2'], 'mockFilter');
-        expect(FilterFactory.filterInstances.mockFilter).toBeInstanceOf(MockFilter);
+        await FilterFactory.initializeFilter(
+            MockFilter,
+            ['arg1', 'arg2'],
+            'mockFilter',
+        );
+        expect(FilterFactory.filterInstances.mockFilter).toBeInstanceOf(
+            MockFilter,
+        );
     });
 
     it('getFilterInstance returns the correct filter instance', async () => {
-        await FilterFactory.initializeFilter(MockFilter, ['arg1', 'arg2'], 'mockFilter');
+        await FilterFactory.initializeFilter(
+            MockFilter,
+            ['arg1', 'arg2'],
+            'mockFilter',
+        );
         const filterInstance = FilterFactory.getFilterInstance('mockFilter');
         expect(filterInstance).toBeInstanceOf(MockFilter);
     });
 
     it('getFilterInstance throws an error when trying to get an uninitialized filter', () => {
-        expect(() => FilterFactory.getFilterInstance('uninitializedFilter')).toThrowError('Filter uninitializedFilter not initialized');
+        expect(() =>
+            FilterFactory.getFilterInstance('uninitializedFilter'),
+        ).toThrowError('Filter uninitializedFilter not initialized');
     });
 });

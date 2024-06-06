@@ -5,7 +5,9 @@ class FilterFactory {
 
     static async initializeFilter(FilterClass, filterArgs, filterName) {
         if (!this.filterInstances[filterName]) {
-            this.filterInstances[filterName] = await FilterClass.create(...filterArgs);
+            this.filterInstances[filterName] = await FilterClass.create(
+                ...filterArgs,
+            );
         }
     }
 

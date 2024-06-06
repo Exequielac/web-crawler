@@ -20,16 +20,28 @@ class HackerNewsCrawler extends BaseCrawler {
 
         // Parse the HTML and extract the entries
         const $ = cheerio.load(html);
-        const entries = Array.from($('.athing')).map((element, index) => {
-            if (index >= this.maxEntries) return null; // limit entries
-          
-            const number = this._extractFirstNumberFromText($(element).find('.rank').text());
-            const title = $(element).find('span.titleline > a').first().text().trim();
-            const subtextElement = $(element).next().find('.subtext');
-            const points = this._extractFirstNumberFromText(subtextElement.find('.score').text());
-            const comments = this._extractFirstNumberFromText(subtextElement.find('a').last().text());
-            return { number, title, points, comments };
-          }).filter(Boolean); // remove null entries
+        const entries = Array.from($('.athing'))
+            .map((element, index) => {
+                if (index >= this.maxEntries) return null; // limit entries
+
+                const number = this._extractFirstNumberFromText(
+                    $(element).find('.rank').text(),
+                );
+                const title = $(element)
+                    .find('span.titleline > a')
+                    .first()
+                    .text()
+                    .trim();
+                const subtextElement = $(element).next().find('.subtext');
+                const points = this._extractFirstNumberFromText(
+                    subtextElement.find('.score').text(),
+                );
+                const comments = this._extractFirstNumberFromText(
+                    subtextElement.find('a').last().text(),
+                );
+                return { number, title, points, comments };
+            })
+            .filter(Boolean); // remove null entries
 
         return entries;
     }

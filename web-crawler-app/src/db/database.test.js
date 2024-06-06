@@ -1,4 +1,10 @@
-const { sequelize, authenticateDB, createTablesIfNotExist, Filters, UsageData } = require('./database');
+const {
+    sequelize,
+    authenticateDB,
+    createTablesIfNotExist,
+    Filters,
+    UsageData,
+} = require('./database');
 
 describe('Database Tests', () => {
     afterAll(async () => {
@@ -8,16 +14,16 @@ describe('Database Tests', () => {
     describe('Connection', () => {
         it('should authenticate successfully', async () => {
             await expect(authenticateDB()).resolves.toBeUndefined();
-          });
-        
-          it('should be able to perform operations', async () => {
+        });
+
+        it('should be able to perform operations', async () => {
             const result = await sequelize.query('SELECT 1+1 AS result');
             expect(result[0][0].result).toBe(2);
-          });
-        
-          it('should create tables if not exist', async () => {
+        });
+
+        it('should create tables if not exist', async () => {
             await expect(createTablesIfNotExist()).resolves.toBeUndefined();
-          });
+        });
     });
 
     describe('Models', () => {

@@ -5,7 +5,9 @@ const { Filters } = require('../db/database');
 class FilterBase {
     constructor(name, description) {
         if (new.target !== this.constructor || new.target === FilterBase) {
-            throw new TypeError("Cannot construct FilterBase instances directly");
+            throw new TypeError(
+                'Cannot construct FilterBase instances directly',
+            );
         }
         this.name = name;
         this.description = description;
@@ -18,7 +20,10 @@ class FilterBase {
                 filter.description = this.description;
                 await filter.save();
             } else {
-                filter = await Filters.create({ name: this.name, description: this.description });
+                filter = await Filters.create({
+                    name: this.name,
+                    description: this.description,
+                });
             }
             this.internalId = filter.id;
         } catch (error) {
@@ -29,7 +34,7 @@ class FilterBase {
 
     static async create(name, description) {
         if (this === FilterBase) {
-            throw new TypeError("Cannot call create on FilterBase directly");
+            throw new TypeError('Cannot call create on FilterBase directly');
         }
 
         const instance = new this(name, description);
@@ -42,7 +47,7 @@ class FilterBase {
     }
 
     _countWords(str) {
-        return str.split(' ').filter(word => /\w/.test(word)).length;
+        return str.split(' ').filter((word) => /\w/.test(word)).length;
     }
 }
 
