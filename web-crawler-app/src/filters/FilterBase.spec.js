@@ -11,62 +11,89 @@ jest.mock('../db/database', () => ({
 }));
 
 describe('FilterBase', () => {
+    class Subclass extends FilterBase { }
+    let instance;
+
     beforeEach(() => {
-        Filters.findOne.mockClear();
-        Filters.create.mockClear();
+        jest.resetAllMocks();
+        Filters.findOne.mockResolvedValue({ id: 1, save: jest.fn() });
+        instance = null;
     });
 
     describe('create', () => {
-        it('sets name and description', async () => {
-            Filters.findOne.mockResolvedValue(null);
-            Filters.create.mockResolvedValue({ id: 1 });
-            const filter = await FilterBase.create('name', 'description');
-            expect(filter.name).toBe('name');
-            expect(filter.description).toBe('description');
+        it('throws when directly invoked', async () => {
+            await expect(() => FilterBase.create("name", "desc")).rejects.toThrow(TypeError);
+        });
+
+        it('creates an instance when invoked on a subclass', async () => {
+            const instance = await Subclass.create("name", "desc");
+            expect(instance).toBeInstanceOf(Subclass);
+            expect(instance.name).toBe("name");
+            expect(instance.description).toBe("desc");
         });
     });
 
     describe('initializeFromDatabase', () => {
-        it('updates existing filter', async () => {
-            Filters.findOne.mockResolvedValue({ id: 1, save: jest.fn() });
-            const filter = await FilterBase.create('name', 'description');
-            await filter.initializeFromDatabase();
-            expect(Filters.findOne).toHaveBeenCalledWith({ where: { name: 'name' } });
-            expect(filter.internalId).toBe(1);
+        it('updates existing filter in database', async () => {
+            const filter = { id: 1, save: jest.fn() };
+            Filters.findOne.mockResolvedValue(filter);
+            const instance = await Subclass.create("name", "desc");
+            expect(filter.description).toBe("desc");
+            expect(filter.save).toHaveBeenCalled();
+            expect(instance.internalId).toBe(1);
         });
 
-        it('creates new filter', async () => {
+        it('creates new filter in database', async () => {
+            const filter = { id: 1 };
             Filters.findOne.mockResolvedValue(null);
-            Filters.create.mockResolvedValue({ id: 2 });
-            const filter = await FilterBase.create('name', 'description');
-            await filter.initializeFromDatabase();
-            expect(Filters.create).toHaveBeenCalledWith({ name: 'name', description: 'description' });
-            expect(filter.internalId).toBe(2);
+            Filters.create.mockResolvedValue(filter);
+            const instance = await Subclass.create("name", "desc");
+            expect(Filters.create).toHaveBeenCalledWith({ name: "name", description: "desc" });
+            expect(instance.internalId).toBe(1);
+        });
+
+        it('throws when database operation fails', async () => {
+            Filters.findOne.mockRejectedValue(new Error("Database error"));
+            await expect(Subclass.create("name", "desc")).rejects.toThrow("Database error");
         });
     });
 
     describe('filter', () => {
         it('throws when not implemented', async () => {
-            Filters.findOne.mockResolvedValue(null);
-            Filters.create.mockResolvedValue({ id: 3 });
-            const filter = await FilterBase.create('name', 'description');
+            const filter = await Subclass.create('name', 'description');
             expect(() => filter.filter()).toThrow(Error);
+        });
+
+        it('does not throw when implemented', async () => {
+            class AnotherSubclass extends FilterBase {
+                filter() { }
+            }
+            const filter = await AnotherSubclass.create('name', 'description');
+            expect(() => filter.filter()).not.toThrow();
         });
     });
 
     describe('_countWords', () => {
-        it('counts words in a string', async () => {
-            Filters.findOne.mockResolvedValue(null);
-            Filters.create.mockResolvedValue({ id: 4 });
-            const filter = await FilterBase.create('name', 'description');
-            const count = filter._countWords('This is a it string');
-            expect(count).toBe(5);
+        it('counts words in a string correctly', async () => {
+            const instance = await Subclass.create("Test Filter", "Test Description");
+
+            const testCases = [
+                { input: "Hello, world!", expected: 2 },
+                { input: "One word", expected: 2 },
+                { input: "", expected: 0 },
+                { input: "Extra     spaces", expected: 2 },
+                { input: "Hello-world", expected: 1 },
+            ];
+
+            testCases.forEach(({ input, expected }) => {
+                expect(instance._countWords(input)).toBe(expected);
+            });
         });
     });
 
     describe('constructor', () => {
         it('throws when directly invoked', () => {
-            expect(() => new FilterBase()).toThrow(TypeError);
+            expect(() => new FilterBase("name", "desc")).toThrow(TypeError);
         });
     });
 });
