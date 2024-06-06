@@ -13,6 +13,12 @@ const FilterByPoints = require('./filters/FilterByPoints');
 const app = express();
 app.use(router);
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
 const server = http.createServer(app);
 
 const initializeFilters = async (filtersConfig) => {
