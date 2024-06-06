@@ -15,7 +15,6 @@ describe('FilterBase', () => {
     let instance;
 
     beforeEach(() => {
-        jest.resetAllMocks();
         Filters.findOne.mockResolvedValue({ id: 1, save: jest.fn() });
         instance = null;
     });
