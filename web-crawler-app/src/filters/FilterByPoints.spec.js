@@ -14,7 +14,6 @@ describe('FilterByPoints', () => {
     let filter;
 
     beforeEach(async () => {
-        jest.resetAllMocks();
         Filters.findOne.mockResolvedValue({ id: 1, save: jest.fn() });
         filter = await FilterByPoints.create('test', 'test description');
     });
