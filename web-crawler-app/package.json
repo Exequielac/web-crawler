@@ -2,8 +2,9 @@
   "name": "web-crawler-app",
   "version": "1.0.0",
   "description": "Web crawler command line utility",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
+    "start": "pm2 start src/server.js",
     "test": "jest"
   },
   "jest": {
@@ -33,6 +34,7 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "nock": "^13.5.4",
+    "pm2": "^5.4.0",
     "supertest": "^7.0.0"
   }
 }
