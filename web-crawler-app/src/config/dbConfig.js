@@ -6,5 +6,5 @@ module.exports = {
     password: process.env.POSTGRES_PASSWORD,
     host: process.env.DB_HOST,
     dialect: 'postgres',
-    logging: false
+    logging: false,
 };

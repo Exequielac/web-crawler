@@ -10,8 +10,7 @@
             }
         },
         "extensions": [
-            "esbenp.prettier-vscode",
-            "dbaeumer.vscode-eslint"
+            "esbenp.prettier-vscode"
         ]
     },
     "postCreateCommand": "git config --global --add safe.directory /workspace"

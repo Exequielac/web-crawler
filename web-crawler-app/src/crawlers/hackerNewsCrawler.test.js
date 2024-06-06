@@ -15,13 +15,19 @@ describe('HackerNewsCrawler', () => {
     });
 
     it('should construct with provided maxEntries', () => {
-        const customCrawler = new HackerNewsCrawler(httpService, 'dummyUrl', 50);
+        const customCrawler = new HackerNewsCrawler(
+            httpService,
+            'dummyUrl',
+            50,
+        );
         expect(customCrawler.maxEntries).toBe(50);
     });
 
     describe('_extractFirstNumberFromText', () => {
         it('should return the first number from the text', () => {
-            expect(crawler._extractFirstNumberFromText('123 abc 456')).toBe(123);
+            expect(crawler._extractFirstNumberFromText('123 abc 456')).toBe(
+                123,
+            );
         });
 
         it('should return 0 if no number in the text', () => {
@@ -47,13 +53,13 @@ describe('HackerNewsCrawler', () => {
                     number: 1,
                     title: 'Boeing Starliner launches first crewed mission',
                     points: 313,
-                    comments: 297 
+                    comments: 297,
                 },
                 {
                     number: 2,
                     title: 'Vulkan1.3 on the M1 in one month',
                     points: 364,
-                    comments: 123 
+                    comments: 123,
                 },
             ]);
         });
@@ -70,20 +76,20 @@ describe('HackerNewsCrawler', () => {
                     number: 1,
                     title: 'Boeing Starliner launches first crewed mission',
                     points: 313,
-                    comments: 297 
+                    comments: 297,
                 },
                 {
                     number: 2,
                     title: 'Vulkan1.3 on the M1 in one month',
                     points: 364,
-                    comments: 123 
+                    comments: 123,
                 },
                 {
                     number: 3,
                     title: 'Employees Who Stay in Companies Longer Than Two Years Get Paid 50% Less (2014)',
                     points: 197,
-                    comments: 147 
-                }
+                    comments: 147,
+                },
             ]);
         });
 

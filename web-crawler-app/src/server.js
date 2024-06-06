@@ -36,8 +36,16 @@ const startServer = async () => {
 
         // Filters initialization
         const filtersConfig = [
-            { FilterClass: FilterByComments, args: Object.values(appConfig.commentsFilter), name: appConfig.commentsFilter.name },
-            { FilterClass: FilterByPoints, args: Object.values(appConfig.pointsFilter), name: appConfig.pointsFilter.name }
+            {
+                FilterClass: FilterByComments,
+                args: Object.values(appConfig.commentsFilter),
+                name: appConfig.commentsFilter.name,
+            },
+            {
+                FilterClass: FilterByPoints,
+                args: Object.values(appConfig.pointsFilter),
+                name: appConfig.pointsFilter.name,
+            },
         ];
         await initializeFilters(filtersConfig);
 

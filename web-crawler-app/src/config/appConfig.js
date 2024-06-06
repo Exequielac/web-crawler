@@ -4,12 +4,12 @@ const appConfig = {
     serverPort: 4200,
     commentsFilter: {
         name: 'comments',
-        description: 'Filter entries by comments'
+        description: 'Filter entries by comments',
     },
     pointsFilter: {
         name: 'points',
-        description: 'Filter entries by points'
-    }
+        description: 'Filter entries by points',
+    },
 };
 
 module.exports = appConfig;
