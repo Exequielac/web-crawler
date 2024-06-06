@@ -10,6 +10,8 @@ services:
       - db
     environment:
       DB_HOST: db
+    ports:
+      - ${FORWARD_PORT}:${APP_SERVER_PORT}
 
   db:
     image: postgres:latest

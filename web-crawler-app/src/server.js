@@ -1,5 +1,14 @@
 'use strict';
 
+const path = require('path');
+require('dotenv').config({
+    path: path.resolve(
+        process.env.NODE_ENV === 'production'
+            ? '/workspace/.env'
+            : '/workspace/.devcontainer/.env',
+    ),
+});
+
 const http = require('http');
 const express = require('express');
 const db = require('./db/database');
@@ -49,7 +58,7 @@ const startServer = async () => {
         ];
         await initializeFilters(filtersConfig);
 
-        const port = appConfig.port || 4200;
+        const port = process.env.APP_SERVER_PORT || 3000;
         server.listen(port, () => {
             console.log(`Server is running on http://localhost:${port}`);
         });
