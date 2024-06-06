@@ -51,9 +51,60 @@ Once you've completed the setup, you're ready to open the development container.
 
 **Important**: The PostgreSQL database is currently configured for persistent storage. This means that data will persist even after the container is stopped. If you prefer to have an ephemeral database (i.e., data does not persist after the container is stopped), you should remove the `volumes` section from the `db` service in the `docker-compose.yml` file.
 
-### Inside the devcontainer
+### Working Inside the DevContainer
 
+#### Installing Dependencies
 
+Once inside the DevContainer, navigate to the project directory. Install the necessary dependencies using npm's clean install command:
+
+```bash
+npm ci
+```
+
+#### Starting the Application
+
+The application uses PM2, a production process manager for Node.js applications. To start the application, use the following npm command:
+
+```bash
+npm run start
+```
+This command will start the application in the background, managed by PM2.
+
+#### API endpoints
+
+The application exposes the following API endpoints:
+
+- `GET /entries`: Fetches all entries from the HackerNews URL.
+- `GET /filters/comments`: Fetches entries from the HackerNews URL, filters those with more than five words in the title, and orders the result by the number of comments.
+- `GET /filters/points`: Fetches entries from the HackerNews URL, filters those with five words or fewer in the title, and orders the result by points.
+
+You can test the API endpoints using `curl` within the development container. Replace `<APP_SERVER_PORT>` with the actual port number where your application is running:
+
+```bash
+# Fetch all entries
+curl -X GET http://localhost:<APP_SERVER_PORT>/entries
+
+# Fetch entries filtered by comments
+curl -X GET http://localhost:<APP_SERVER_PORT>/filters/comments
+
+# Fetch entries filtered by points
+curl -X GET http://localhost:<APP_SERVER_PORT>/filters/points
+```
+
+Or you can test the API endpoints from your host machine:
+
+Alternatively, you can test the API endpoints from your host machine. Make sure to replace `<FORWARD_PORT>` with the actual port number that you've forwarded to the Docker container:
+
+```bash
+# Fetch all entries
+curl http://localhost:<FORWARD_PORT>/entries
+
+# Fetch entries filtered by the number of comments
+curl http://localhost:<FORWARD_PORT>/filters/comments
+
+# Fetch entries filtered by points
+curl http://localhost:<FORWARD_PORT>/filters/points
+```
 
 ## Data Storage
 
