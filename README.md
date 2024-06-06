@@ -102,8 +102,6 @@ curl -X GET http://localhost:<APP_SERVER_PORT>/filters/comments
 curl -X GET http://localhost:<APP_SERVER_PORT>/filters/points
 ```
 
-Or you can test the API endpoints from your host machine:
-
 Alternatively, you can test the API endpoints from your host machine. Make sure to replace `<FORWARD_PORT>` with the actual port number that you've forwarded to the Docker container:
 
 ```bash
@@ -137,7 +135,29 @@ This command will stop the Node.js server that's running in the background via P
 
 ## Data Storage
 
-**WIP**
+The application uses Sequelize, a promise-based Node.js ORM, for data storage. The data model is defined in two parts:
+
+- `Filters`: This model represents the filters that can be applied to the HackerNews entries. It has two fields:
+  - `name`: A unique string that represents the name of the filter.
+  - `description`: A string that provides a description of what the filter does.
+
+- `UsageData`: This model represents the usage data of the filters. It has three fields:
+  - `timestamp`: A date that represents when the filter was used.
+  - `filterId`: An integer that references the id of the filter used. This creates a foreign key relationship with the `Filters` model.
+  - `result`: A JSON object that stores the result of applying the filter.
+
+The `Filters` and `UsageData` models are stored in the `filters` and `usage_data` tables in the database, respectively.
+
+To inspect the `usage_data` table, you can access the PostgreSQL database within the Docker container. This allows you to directly query and view the data stored in the table.
+
+## Future Enhancements
+
+- Implement a new API endpoint `/usage` to retrieve information from the `usage_data` table.
+- Enhance the `usage_data` table by adding a new column to record the time taken by each crawl operation.
+- Develop a user-friendly frontend interface for easier interaction with the application.
+- Integrate the application with a Continuous Integration (CI) environment such as GitHub Actions for automated testing.
+- Deploy the application on a public server.
+- Establish a Continuous Deployment (CD) pipeline for streamlined updates and releases.
 
 ## Note
 
