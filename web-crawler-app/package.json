@@ -5,6 +5,7 @@
     "main": "src/server.js",
     "scripts": {
         "start": "pm2 start src/server.js",
+        "stop": "pm2 stop src/server.js",
         "test": "jest",
         "format": "prettier --write ."
     },
