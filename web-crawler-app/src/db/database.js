@@ -19,6 +19,8 @@ const models = {
   UsageData: require('../models/UsageData')(sequelize, Sequelize.DataTypes),
 };
 
+models.UsageData.belongsTo(models.Filters, { foreignKey: 'filterId' });
+
 const authenticateDB = async () => {
   try {
     await sequelize.authenticate();
