@@ -46,7 +46,7 @@ describe('AppController', () => {
         const mockFilteredEntries = [{ id: 1, comments: 10 }];
         HackerNewsCrawler.prototype.crawl = jest.fn().mockResolvedValue(mockEntries);
         FilterFactory.getFilterInstance = jest.fn().mockReturnValue({
-            id: 'commentsFilter',
+            internalId: 'commentsFilter',
             filter: jest.fn().mockReturnValue(mockFilteredEntries),
         });
         UsageData.create = jest.fn();
@@ -57,7 +57,7 @@ describe('AppController', () => {
         expect(response.body).toEqual(mockFilteredEntries);
         expect(UsageData.create).toHaveBeenCalledWith({
             timestamp: expect.any(Date),
-            filter: 'commentsFilter',
+            filterId: 'commentsFilter',
             result: mockFilteredEntries,
         });
     });
@@ -67,7 +67,7 @@ describe('AppController', () => {
         const mockFilteredEntries = [{ id: 1, points: 10 }];
         HackerNewsCrawler.prototype.crawl = jest.fn().mockResolvedValue(mockEntries);
         FilterFactory.getFilterInstance = jest.fn().mockReturnValue({
-            id: 'pointsFilter',
+            internalId: 'pointsFilter',
             filter: jest.fn().mockReturnValue(mockFilteredEntries),
         });
         UsageData.create = jest.fn();
@@ -78,7 +78,7 @@ describe('AppController', () => {
         expect(response.body).toEqual(mockFilteredEntries);
         expect(UsageData.create).toHaveBeenCalledWith({
             timestamp: expect.any(Date),
-            filter: 'pointsFilter',
+            filterId: 'pointsFilter',
             result: mockFilteredEntries,
         });
     });
