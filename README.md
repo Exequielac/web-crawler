@@ -44,7 +44,7 @@ The application requires the following environment variables to be set (included
 To quickly set up your environment variables, you can make a copy of the `.example.env` file and rename it to `.env`. You can do this using the following command:
 
 ```bash
-cp .example.env .env
+cp .devcontainer/.example.env .devcontainer/.env
 ```
 
 Once you've completed the setup, you're ready to open the development container. In Visual Studio Code, use the "Reopen in Container" option provided by the Docker extension. This will rebuild the Docker image and start the development environment inside the container.
