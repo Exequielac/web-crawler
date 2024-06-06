@@ -33,6 +33,7 @@ describe('AppController', () => {
         app = express();
         app.get('/entries', AppController.getEntries);
         app.get('/filter/comments', AppController.filterByComments);
+        app.get('/filter/points', AppController.filterByPoints);
     });
 
     it('getEntries returns entries from crawler', async () => {
@@ -59,6 +60,24 @@ describe('AppController', () => {
         expect(UsageData.create).toHaveBeenCalledWith({
             timestamp: expect.any(Date),
             filter: commentsFilterInstance.id,
+            result: mockFilteredEntries,
+        });
+    });
+
+    it('filterByPoints filters entries and saves usage data', async () => {
+        const mockEntries = [{ id: 1, points: 10 }, { id: 2, points: 5 }];
+        const mockFilteredEntries = [{ id: 1, points: 10 }];
+        HackerNewsCrawler.prototype.crawl = jest.fn().mockResolvedValue(mockEntries);
+        pointsFilterInstance.filter = jest.fn().mockReturnValue(mockFilteredEntries);
+        UsageData.create = jest.fn();
+
+        const response = await request(app).get('/filter/points');
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual(mockFilteredEntries);
+        expect(UsageData.create).toHaveBeenCalledWith({
+            timestamp: expect.any(Date),
+            filter: pointsFilterInstance.id,
             result: mockFilteredEntries,
         });
     });
