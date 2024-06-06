@@ -30,7 +30,7 @@ class AppController {
             UsageData.create(
                 {
                     timestamp: new Date(),
-                    filter: filterInstance.id,
+                    filterId: filterInstance.internalId,
                     result: filteredEntries,
                 }
             )
