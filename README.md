@@ -61,6 +61,17 @@ Once inside the DevContainer, navigate to the project directory. Install the nec
 npm ci
 ```
 
+#### Configuring the Application
+
+The behavior of the application can be customized in the `web-crawler-app/src/config/appConfig.js` file. This configuration file allows you to specify the HackerNews URL to crawl and the number of entries to fetch. The variables are:
+
+- `url`: The URL of the HackerNews page to crawl.
+- `entries`: The number of entries to fetch from the page.
+
+This configuration allows the application to crawl different pages from HackerNews, such as the second page.
+
+**NOTE**: The application is specifically designed to work with HackerNews. If you specify a different website, it may result in unexpected behavior.
+
 #### Starting the Application
 
 The application uses PM2, a production process manager for Node.js applications. To start the application, use the following npm command:
@@ -105,6 +116,24 @@ curl http://localhost:<FORWARD_PORT>/filters/comments
 # Fetch entries filtered by points
 curl http://localhost:<FORWARD_PORT>/filters/points
 ```
+
+#### Running Tests
+
+The application uses Jest for testing, following the Test-Driven Development (TDD) methodology. To execute the tests, use the following command:
+
+```bash
+npm run test
+```
+
+#### Stopping the Server
+
+When you're done with your development work, you can stop the server using the following command:
+
+```bash
+npm run stop
+```
+
+This command will stop the Node.js server that's running in the background via PM2.
 
 ## Data Storage
 
