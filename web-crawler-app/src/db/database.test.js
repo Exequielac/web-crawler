@@ -32,12 +32,12 @@ describe('Database Tests', () => {
 
     describe('Tables', () => {
         it('should have a Filter table', async () => {
-            const result = await sequelize.query('SELECT * FROM "Filters"');
+            const result = await sequelize.query('SELECT * FROM filters');
             expect(result).toBeDefined();
         });
 
         it('should have a UsageData table', async () => {
-            const result = await sequelize.query('SELECT * FROM "UsageData"');
+            const result = await sequelize.query('SELECT * FROM usage_data');
             expect(result).toBeDefined();
         });
     });
