@@ -53,6 +53,12 @@ Once you've completed the setup, you're ready to open the development container.
 
 ### Working Inside the DevContainer
 
+Navigate to the `web-crawler-app` directory to execute the following instructions detailed in this section:
+
+```bash
+cd web-crawler-app
+```
+
 #### Installing Dependencies
 
 Once inside the DevContainer, navigate to the project directory. Install the necessary dependencies using npm's clean install command:
@@ -86,8 +92,8 @@ This command will start the application in the background, managed by PM2.
 The application exposes the following API endpoints:
 
 - `GET /entries`: Fetches all entries from the HackerNews URL.
-- `GET /filters/comments`: Fetches entries from the HackerNews URL, filters those with more than five words in the title, and orders the result by the number of comments.
-- `GET /filters/points`: Fetches entries from the HackerNews URL, filters those with five words or fewer in the title, and orders the result by points.
+- `GET /filter/comments`: Fetches entries from the HackerNews URL, filters those with more than five words in the title, and orders the result by the number of comments.
+- `GET /filter/points`: Fetches entries from the HackerNews URL, filters those with five words or fewer in the title, and orders the result by points.
 
 You can test the API endpoints using `curl` within the development container. Replace `<APP_SERVER_PORT>` with the actual port number where your application is running:
 
@@ -96,10 +102,10 @@ You can test the API endpoints using `curl` within the development container. Re
 curl -X GET http://localhost:<APP_SERVER_PORT>/entries
 
 # Fetch entries filtered by comments
-curl -X GET http://localhost:<APP_SERVER_PORT>/filters/comments
+curl -X GET http://localhost:<APP_SERVER_PORT>/filter/comments
 
 # Fetch entries filtered by points
-curl -X GET http://localhost:<APP_SERVER_PORT>/filters/points
+curl -X GET http://localhost:<APP_SERVER_PORT>/filter/points
 ```
 
 Alternatively, you can test the API endpoints from your host machine. Make sure to replace `<FORWARD_PORT>` with the actual port number that you've forwarded to the Docker container:
@@ -109,10 +115,10 @@ Alternatively, you can test the API endpoints from your host machine. Make sure 
 curl http://localhost:<FORWARD_PORT>/entries
 
 # Fetch entries filtered by the number of comments
-curl http://localhost:<FORWARD_PORT>/filters/comments
+curl http://localhost:<FORWARD_PORT>/filter/comments
 
 # Fetch entries filtered by points
-curl http://localhost:<FORWARD_PORT>/filters/points
+curl http://localhost:<FORWARD_PORT>/filter/points
 ```
 
 #### Running Tests
@@ -152,6 +158,7 @@ To inspect the `usage_data` table, you can access the PostgreSQL database within
 
 ## Future Enhancements
 
+- Containerize the application: Currently, the application is running in a development container. The task is to properly configure it for production use in a Docker container.
 - Implement a new API endpoint `/usage` to retrieve information from the `usage_data` table.
 - Enhance the `usage_data` table by adding a new column to record the time taken by each crawl operation.
 - Develop a user-friendly frontend interface for easier interaction with the application.
