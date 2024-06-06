@@ -6,12 +6,14 @@ module.exports = (sequelize, DataTypes) => {
         filterId: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'Filters',
+                model: 'filters',
                 key: 'id'
             }
         },
         result: {
             type: DataTypes.JSON,
         }
+    }, {
+        tableName: 'usage_data'
     });
 };

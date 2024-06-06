@@ -7,5 +7,7 @@ module.exports = (sequelize, DataTypes) => {
             unique: true
         },
         description: DataTypes.STRING
+    }, {
+        tableName: 'filters'
     });
 };
